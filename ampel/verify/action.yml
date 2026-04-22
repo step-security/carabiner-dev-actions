@@ -106,7 +106,7 @@ runs:
         fi
       shell: bash
 
-    - uses: step-security/carabiner-dev-actions/install/ampel@release
+    - uses: step-security/carabiner-dev-actions/install/ampel@34fa7d8702af0e59d365dd513cf17626667b1873 # release
       name: 🔴🟡🟢 AMPEL Setup
       id: install
 
@@ -174,7 +174,7 @@ runs:
 
     - if: ${{ steps.attest-check.outputs.attest == 'true' }}
       name: Setup bnd
-      uses: step-security/carabiner-dev-actions/install/bnd@release
+      uses: step-security/carabiner-dev-actions/install/bnd@34fa7d8702af0e59d365dd513cf17626667b1873 # release
 
     - if: ${{ steps.attest-check.outputs.attest == 'true' }}
       name: sign-ampel-results
