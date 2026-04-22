@@ -112,9 +112,12 @@ runs:
 
     - id: attest-check
       shell: bash
+      env:
+        INPUT_ATTEST: ${{ inputs.attest }}
+        EVENT_NAME: ${{ github.event_name }}
       run: |
-        ATTEST="${{ inputs.attest }}"
-        if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+        ATTEST="${INPUT_ATTEST}"
+        if [ "${EVENT_NAME}" = "workflow_dispatch" ]; then
           echo "::notice::Attestation disabled: no token available for workflow_dispatch events"
           ATTEST="false"
         fi
@@ -122,37 +125,48 @@ runs:
 
     - id: verify
       shell: bash
+      env:
+        INPUT_CONTEXT: ${{ inputs.context }}
+        INPUT_KEY: ${{ inputs.key }}
+        INPUT_KEYDATA: ${{ inputs.keydata }}
+        INPUT_SUBJECT: ${{ inputs.subject }}
+        INPUT_COLLECTOR: ${{ inputs.collector }}
+        INPUT_POLICY: ${{ inputs.policy }}
+        INPUT_FAIL: ${{ inputs.fail }}
+        INPUT_ATTEST_RESULTS: ${{ steps.attest-check.outputs.attest }}
+        INPUT_ATTEST_FORMAT: ${{ inputs.attest-format }}
+        INPUT_RESULTS_PATH: ${{ inputs.results-path }}
+        INPUT_ATTESTATION: ${{ inputs.attestation }}
+        INPUT_SIGNER: ${{ inputs.signer }}
       run: |
-        KEY_FLAGS=""
-        CONTEXT_FLAGS=""
+        ARGS=()
 
-        if [ -n "${{ inputs.context }}" ]; then
-          CONTEXT_FLAGS="--context \"${{ inputs.context }}\""
+        if [ -n "${INPUT_CONTEXT}" ]; then
+          ARGS+=(--context "${INPUT_CONTEXT}")
         fi
 
-        if [ -n "${{ inputs.key }}" ]; then
-          KEY_FLAGS="--key=${{ inputs.key }}"
+        if [ -n "${INPUT_KEY}" ]; then
+          ARGS+=(--key="${INPUT_KEY}")
         fi
 
-        if [ -n "${{ inputs.keydata }}" ]; then
+        if [ -n "${INPUT_KEYDATA}" ]; then
           KEYDATA_FILE=$(mktemp)
-          printf '%s\n' '${{ inputs.keydata }}' > "${KEYDATA_FILE}"
-          KEY_FLAGS="${KEY_FLAGS} --key=${KEYDATA_FILE}"
+          printf '%s\n' "${INPUT_KEYDATA}" > "${KEYDATA_FILE}"
+          ARGS+=(--key="${KEYDATA_FILE}")
         fi
 
         ampel verify \
-          --subject="${{ inputs.subject }}" \
-          --collector="${{ inputs.collector }}" \
-          --policy="${{ inputs.policy }}" \
-          --exit-code="${{ inputs.fail }}" \
-          --attest-results="${{ steps.attest-check.outputs.attest }}" \
-          --attest-format="${{ inputs.attest-format }}" \
-          --results-path="${{ inputs.results-path }}" \
-          --attestation="${{ inputs.attestation }}" \
-          --signer="${{ inputs.signer }}" \
-          ${KEY_FLAGS} \
-          ${CONTEXT_FLAGS} \
-          --format="html" >> $GITHUB_STEP_SUMMARY
+          --subject="${INPUT_SUBJECT}" \
+          --collector="${INPUT_COLLECTOR}" \
+          --policy="${INPUT_POLICY}" \
+          --exit-code="${INPUT_FAIL}" \
+          --attest-results="${INPUT_ATTEST_RESULTS}" \
+          --attest-format="${INPUT_ATTEST_FORMAT}" \
+          --results-path="${INPUT_RESULTS_PATH}" \
+          --attestation="${INPUT_ATTESTATION}" \
+          --signer="${INPUT_SIGNER}" \
+          "${ARGS[@]}" \
+          --format="html" >> "$GITHUB_STEP_SUMMARY"
 
         if [ -n "${KEYDATA_FILE:-}" ]; then
           rm -f "${KEYDATA_FILE}"
@@ -165,9 +179,11 @@ runs:
     - if: ${{ steps.attest-check.outputs.attest == 'true' }}
       name: sign-ampel-results
       shell: bash
+      env:
+        INPUT_RESULTS_PATH: ${{ inputs.results-path }}
       run: |
-        mv ${{ inputs.results-path }} ${{ inputs.results-path }}.tmp
-        bnd statement ${{ inputs.results-path }}.tmp >> ${{ inputs.results-path }}
+        mv "${INPUT_RESULTS_PATH}" "${INPUT_RESULTS_PATH}.tmp"
+        bnd statement "${INPUT_RESULTS_PATH}.tmp" >> "${INPUT_RESULTS_PATH}"
 
     - if: ${{ steps.attest-check.outputs.attest == 'true' && inputs.push-attestation == 'true' }}
       name: Push attestation to artifacts
