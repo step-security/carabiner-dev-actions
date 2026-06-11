@@ -65,7 +65,7 @@ runs:
         fi
       shell: bash
 
-    - uses: step-security/carabiner-dev-actions/install/download-and-verify@auto-cherry-pick
+    - uses: step-security/carabiner-dev-actions/install/download-and-verify@9b29c458127ed82ae9a2470fe8dfc98cc94a6b96 # auto-cherry-pick
       with:
         tool: bnd
         version: ${{ inputs.version }}
