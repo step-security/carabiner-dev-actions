@@ -65,7 +65,7 @@ runs:
         fi
       shell: bash
 
-    - uses: step-security/carabiner-dev-actions/install/download-and-verify@main
+    - uses: step-security/carabiner-dev-actions/install/download-and-verify@a8f42741cb08eaf075df9480b083b229b6927162 # main
       with:
         tool: bnd
         version: ${{ inputs.version }}
