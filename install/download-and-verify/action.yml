@@ -118,7 +118,7 @@ runs:
 
       - name: Bootstrap trusted ampel
         if: inputs.verify == 'true'
-        uses: step-security/carabiner-dev-actions/install/ampel-bootstrap@auto-cherry-pick
+        uses: step-security/carabiner-dev-actions/install/ampel-bootstrap@main
         id: bootstrap
 
       - name: Detect platform
