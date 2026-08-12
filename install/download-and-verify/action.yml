@@ -127,7 +127,7 @@ runs:
 
       - name: Bootstrap trusted ampel
         if: inputs.verify == 'true'
-        uses: step-security/carabiner-dev-actions/install/ampel-bootstrap@a8f42741cb08eaf075df9480b083b229b6927162 # main
+        uses: step-security/carabiner-dev-actions/install/ampel-bootstrap@v1 #update post release
         id: bootstrap
 
       - name: Detect platform
