@@ -128,10 +128,10 @@ runs:
     # the automation bump workflow maintains) instead of duplicating it here.
     - if: ${{ inputs.ampel-version == '' }}
       name: 🔴🟡🟢 AMPEL Setup
-      uses: step-security/carabiner-dev-actions/install/ampel@c7966422b3a49c6726667b03b21ac243e76caea5 #v1.2.6
+      uses: $/install/ampel
     - if: ${{ inputs.ampel-version != '' }}
       name: 🔴🟡🟢 AMPEL Setup (pinned)
-      uses: step-security/carabiner-dev-actions/install/ampel@c7966422b3a49c6726667b03b21ac243e76caea5 #v1.2.6
+      uses: $/install/ampel
       with:
         version: ${{ inputs.ampel-version }}
 
