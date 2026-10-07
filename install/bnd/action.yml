@@ -16,7 +16,7 @@ inputs:
   version:
     description: 'bnd version to install'
     required: false
-    default: 'v0.4.4'
+    default: 'v0.4.6'
 runs:
   using: "composite"
   steps:
@@ -65,7 +65,7 @@ runs:
         fi
       shell: bash
 
-    - uses: step-security/carabiner-dev-actions/install/download-and-verify@c7966422b3a49c6726667b03b21ac243e76caea5 #v1.2.6
+    - uses: $/install/download-and-verify
       with:
         tool: bnd
         version: ${{ inputs.version }}
