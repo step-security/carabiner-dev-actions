@@ -41,7 +41,7 @@ jobs:
       id-token: write   # required to mint the workflow OIDC token
       contents: read
     steps:
-      - uses: carabiner-dev/actions/login@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0 # pin to a release commit once tagged
+      - uses: step-security/carabiner-dev-actions/login@v1 # pin to a release commit once tagged
       # CARABINER_CREDENTIALS is now set for subsequent steps
 ```
 
@@ -73,7 +73,7 @@ its attestations against a policy.
 #### Usage
 
 ```yaml
-- uses: carabiner-dev/actions/ampel/verify@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0
+- uses: step-security/carabiner-dev-actions/ampel/verify@v1
   with:
     policy: 'path/to/policy.yaml'   # URI or path to policy code
     subject: 'path/to/artifact'     # or digest, eg sha256:98349875bf3e09...
@@ -102,7 +102,7 @@ its attestations against a policy.
 **Basic verification:**
 
 ```yaml
-- uses: carabiner-dev/actions/ampel/verify@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0
+- uses: step-security/carabiner-dev-actions/ampel/verify@v1
   with:
     policy: '.ampel/policy.yaml'
     subject: 'path/to/binary'
@@ -112,7 +112,7 @@ its attestations against a policy.
 **Verification with custom attestations:**
 
 ```yaml
-- uses: carabiner-dev/actions/ampel/verify@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0
+- uses: step-security/carabiner-dev-actions/ampel/verify@v1
   with:
     policy: '.ampel/policy.yaml'
     subject: 'sha256:abc123...'
@@ -124,7 +124,7 @@ its attestations against a policy.
 **Verification with attestation push:**
 
 ```yaml
-- uses: carabiner-dev/actions/ampel/verify@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0
+- uses: step-security/carabiner-dev-actions/ampel/verify@v1
   with:
     policy: '.ampel/policy.yaml'
     subject: 'path/to/artifact'
@@ -137,7 +137,7 @@ its attestations against a policy.
 **Verification without failing the workflow:**
 
 ```yaml
-- uses: carabiner-dev/actions/ampel/verify@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0
+- uses: step-security/carabiner-dev-actions/ampel/verify@v1
   with:
     policy: '.ampel/policy.yaml'
     subject: 'path/to/artifact'
@@ -158,7 +158,7 @@ ecosystem or specific codebase IDs.
 #### Usage
 
 ```yaml
-- uses: carabiner-dev/actions/sbom/source@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0
+- uses: step-security/carabiner-dev-actions/sbom/source@v1
   with:
     ecosystems: |
       golang
@@ -195,7 +195,7 @@ in-toto attestations and signed with the workflow's own identity.
 #### Usage
 
 ```yaml
-- uses: carabiner-dev/actions/sbom/image@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0
+- uses: step-security/carabiner-dev-actions/sbom/image@v1
   with:
     images: ghcr.io/${{ github.repository }}:${{ github.sha }}
     attest: 'true'
@@ -230,7 +230,7 @@ built-in specs for GitHub repositories, organizations, branch rules and more.
 #### Usage
 
 ```yaml
-- uses: carabiner-dev/actions/snappy/snap@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0 # pin to a release commit once tagged
+- uses: step-security/carabiner-dev-actions/snappy/snap@v1 # pin to a release commit once tagged
   with:
     spec: builtin:github/branch-rules.yaml
     vars: |
@@ -279,7 +279,7 @@ verifiable evidence about a specific commit.
 #### Usage
 
 ```yaml
-- uses: carabiner-dev/actions/bnd/commit@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0 # pin to a release commit once tagged
+- uses: step-security/carabiner-dev-actions/bnd/commit@v1 # pin to a release commit once tagged
   with:
     path: SECURITY-INSIGHTS.yml
     type: https://github.com/ossf/security-insights-spec
@@ -325,7 +325,7 @@ to upload as an artifact, attach to a release or hand to AMPEL through its
 #### Usage
 
 ```yaml
-- uses: carabiner-dev/actions/bnd/pack@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0 # pin to a release commit once tagged
+- uses: step-security/carabiner-dev-actions/bnd/pack@v1 # pin to a release commit once tagged
   with:
     bundles: attestations/
     upload-artifact: 'true'
@@ -363,7 +363,7 @@ what the statements are about.
 #### Usage
 
 ```yaml
-- uses: carabiner-dev/actions/vexflow/assemble@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0 # pin to a release commit once tagged
+- uses: step-security/carabiner-dev-actions/vexflow/assemble@v1 # pin to a release commit once tagged
   with:
     output: attestations/openvex.bundle.json
 ```
@@ -406,7 +406,7 @@ release; without a policy that applies, nothing is installed.
 #### Usage
 
 ```yaml
-- uses: carabiner-dev/actions/drop/install@d41fe10fe88deaf493ce026007da73738b9f570c # v1.3.0 # pin to a release commit once tagged
+- uses: step-security/carabiner-dev-actions/drop/install@v1 # pin to a release commit once tagged
   with:
     app: sigstore/cosign
     version: v3.1.3
