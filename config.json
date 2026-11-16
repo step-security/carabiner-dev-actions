@@ -1,0 +1,12 @@
+{
+  "$comment": "Managed automatically when syncing with upstream. Do not edit by hand.",
+  "schema_version": 1,
+  "onboarding_type": "copied",
+  "action_type": "composite",
+  "upstream": {
+    "repository": "carabiner-dev/actions",
+    "synced_tag": "v1.3.1",
+    "synced_commit": "63d43b57262e65927864c8f7ca0a6a8efe06acc0",
+    "archived": false
+  }
+}
